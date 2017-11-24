@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainView{
     @Override
     public void switch2News() {
     getSupportFragmentManager().beginTransaction().replace(R.id.frame_content,new NewsFragment()).commit();
+     mToolbar.setTitle("新闻");
     }
 
     @Override

@@ -22,7 +22,7 @@ public class NewsModelImp implements NewsModel{
         OkHttpUtils.ResultCallback<String> loadNewsCallback=new OkHttpUtils.ResultCallback<String>() {
             @Override
             public void onSuccess(String response) {
-                Log.d(TAG,TAG+" ---loadNews-->>> response= "+response);
+                Log.d(TAG,TAG+" type="+ type+" ---loadNews-->>> response= "+response);
                 List<NewsBean> newsBeanList = NewsJsonUtils.readJsonNewsBeans(response, getID(type));
                 listener.onSuccess(newsBeanList);
             }
@@ -30,6 +30,7 @@ public class NewsModelImp implements NewsModel{
             @Override
             public void onFailure(Exception e) {
                 Log.d(TAG,TAG+" ---loadNews-->>>e= "+e.toString());
+                listener.onFailure("load news list failure.", e);
             }
         };
         OkHttpUtils.get(url,loadNewsCallback);

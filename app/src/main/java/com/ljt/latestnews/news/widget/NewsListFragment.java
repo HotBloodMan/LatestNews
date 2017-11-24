@@ -49,12 +49,13 @@ public class NewsListFragment extends Fragment implements NewsView,SwipeRefreshL
     public NewsListFragment() {
         // Required empty public constructor
     }
-    public static NewsListFragment newInstance(int mType){
+    public static NewsListFragment newInstance(int type){
+         Log.d(TAG,TAG+" newInstance----->>>type=  "+type);
         Bundle args = new Bundle();
-        NewsListFragment f = new NewsListFragment();
-        args.putInt("type",mType);
-        f.setArguments(args);
-        return f;
+        NewsListFragment fragment = new NewsListFragment();
+        args.putInt("type", type);
+        fragment.setArguments(args);
+        return fragment;
     }
 
 
@@ -63,6 +64,7 @@ public class NewsListFragment extends Fragment implements NewsView,SwipeRefreshL
         super.onCreate(savedInstanceState);
         mNewsPresenter=new NewsPresenterImp(this);
         mType=getArguments().getInt("type");
+         Log.d(TAG,TAG+" ----->>>mType= "+mType);
     }
 
     @Override
@@ -73,6 +75,7 @@ public class NewsListFragment extends Fragment implements NewsView,SwipeRefreshL
         mSwipeRefreshWidget.setColorSchemeResources(R.color.primary,
                 R.color.primary_dark,R.color.primary_light,
                 R.color.accent);
+
         mSwipeRefreshWidget.setOnRefreshListener(this);
 
         mRecyclerView = (RecyclerView)view.findViewById(R.id.recycle_view);
@@ -84,6 +87,7 @@ public class NewsListFragment extends Fragment implements NewsView,SwipeRefreshL
         mAdapter=new NewsAdapter(getActivity().getApplicationContext());
         mAdapter.setOnItemClickListener(mOntemClickListener);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
+        mRecyclerView.setAdapter(mAdapter);
         onRefresh();
 
         return view;
@@ -151,7 +155,7 @@ public class NewsListFragment extends Fragment implements NewsView,SwipeRefreshL
 
     @Override
     public void addNews(List<NewsBean> newsList) {
-        Log.d(TAG,TAG+" ----->>>addNews( ");
+        Log.d(TAG,TAG+" ----->>>addNews(  newsList= "+newsList.size());
         mAdapter.isShowFooter(true);
         if(mData==null){
             mData=new ArrayList<>();
@@ -186,4 +190,5 @@ public class NewsListFragment extends Fragment implements NewsView,SwipeRefreshL
                 .findViewById(R.id.drawer_layout);
         Snackbar.make(view, getString(R.string.load_fail), Snackbar.LENGTH_SHORT).show();
     }
+
 }

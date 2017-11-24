@@ -28,9 +28,9 @@ public class NewsPresenterImp implements NewsPresenter,OnLoadNewsListListener {
     }
 
     @Override
-    public void loadNews(int type, int page) {
+    public void loadNews(final int type, final int page) {
         String url = getUrl(type, page);
-         Log.d(TAG,TAG+" ----->>>url= "+url.toString());
+         Log.d(TAG,TAG+" type"+type+" ----->>>url= "+url.toString());
         //只有第一页时才显示进度条
         if(page==0){
             mNewsView.showProgress();
@@ -40,13 +40,13 @@ public class NewsPresenterImp implements NewsPresenter,OnLoadNewsListListener {
     //根据类别和页面索引创建url
     private String getUrl(int type,int pageIndex){
         StringBuffer sb = new StringBuffer();
-        switch (type){
+        switch (type) {
             case NewsFragment.NEWS_TYPE_TOP:
                 sb.append(Urls.TOP_URL).append(Urls.TOP_ID);
                 break;
-          case NewsFragment.NEWS_TYPE_NBA:
-            sb.append(Urls.COMMON_URL).append(Urls.NBA_ID);
-            break;
+            case NewsFragment.NEWS_TYPE_NBA:
+                sb.append(Urls.COMMON_URL).append(Urls.NBA_ID);
+                break;
             case NewsFragment.NEWS_TYPE_CARS:
                 sb.append(Urls.COMMON_URL).append(Urls.CAR_ID);
                 break;
